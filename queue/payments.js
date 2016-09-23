@@ -52,8 +52,8 @@ queue.on('error', (err) => {
 
 // Set up UI
 // TODO: export KUE_PORT=6379
-kue.app.listen(process.env.KUE_PORT);
-kue.app.set('title', 'Kue');
+//kue.app.listen(process.env.KUE_PORT);
+//kue.app.set('title', 'Kue');
 
 function createPayment(data, done) {
     queue.create('payment', data)

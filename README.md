@@ -4,8 +4,9 @@
 Start redis:<br>
 `redis-server`<br>
 
-Set environment variable:<br>
-`export KUE_PORT=6379`<br>
+~~Scratch this.~~<br>
+~~Set environment variable:~~<br>
+~~`export KUE_PORT=6379`~~<br>
 
 Start this app like this:<br>
 `node bin/www`<br>
