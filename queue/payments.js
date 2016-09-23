@@ -5,9 +5,9 @@
  *
  * If you don't provide any connection configuration, Kue
  * will automatically look for redis at the default, local url.
- * This will break immediately in production, however, so we'll
+ * This will break immediately in production (see TODO) so we'll
  * check to see which environment node is running in first.
- * You can see all of the configuration options availble here:
+ * You can see all of the configuration options available here:
  * https://github.com/Automattic/kue#redis-connection-settings
  */
 
@@ -49,6 +49,11 @@ queue.on('error', (err) => {
     console.error(err);
     console.error(err.stack);
 });
+
+// Set up UI
+// TODO: export KUE_PORT=6379
+kue.app.listen(process.env.KUE_PORT);
+kue.app.set('title', 'Kue');
 
 function createPayment(data, done) {
     queue.create('payment', data)

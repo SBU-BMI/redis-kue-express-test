@@ -1,13 +1,14 @@
 "use strict";
 
-const request = require('supertest');
+const supertest = require('supertest');
 const app = require('../app');
-const api = request(app);
+const api = supertest(app);
+const queue = require('kue').createQueue();
 
 const test = require('tape');
 
 const dummyOrder = {
-    // This job property lets you make better use of the kue UI — keep reading for more
+    // This job property lets you make better use of the UI
     title: 'Order #4kSvjL_Qx',
     paymentToken: '4kSvjL_Qx',
     orderID: '1a2b3c4',
@@ -23,12 +24,13 @@ const dummyOrder = {
     }
 };
 
+
 test('Receiving and processing payments', t => {
     api
         .post('/payments')
         .send(dummyOrder)
         .end((err, res) => {
-            const order = res.body.order;
+            const order = res.body.order
 
             // Check for response body
             t.ok(res.body, 'Should respond with a body');
@@ -44,9 +46,20 @@ test('Receiving and processing payments', t => {
             t.equals(order.paymentToken, dummyOrder.paymentToken, 'Payment token should be the same');
             t.equals(order.productID, dummyOrder.productID, 'Product ID should be the same');
             t.end();
-
-            // Authpr ran into some unexpected behavior w/ supertest and tape where tape tests would appear to hang,
-            // even after calling t.end()
-            process.exit();
         });
+});
+
+test('Creating payments and processing items with the queue', t => {
+    queue.testMode.enter();
+
+    queue.createJob('payment', dummyOrder).save();
+    queue.createJob('payment', dummyOrder).save();
+
+    t.equal(queue.testMode.jobs.length, 2, 'There should be two jobs');
+    t.equal(queue.testMode.jobs[0].type, 'payment', 'The jobs should be of type payment');
+    t.equal(queue.testMode.jobs[0].data, dummyOrder, 'The job data should be intact');
+
+    queue.testMode.clear();
+    queue.testMode.exit()
+    t.end();
 });

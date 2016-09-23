@@ -47,6 +47,8 @@ echo "Should give you a failing test - this is OK for now."
 redis-server &
 # port 6379 (the default port)
 
+echo "Important TODO! export KUE_PORT=6379"
+
 mkdir queue && cd $_ && touch payments.js
 
 # https://github.com/Automattic/kue#failure-backoff
