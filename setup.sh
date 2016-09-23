@@ -3,7 +3,7 @@
 #
 # Based on instructions from https://ifelse.io/2016/02/23/using-node-redis-and-kue-for-priority-job-processing/
 # Adapted for personal development machine.
-# This shell is just a helper, may have imperfections, use at own risk!
+# This shell is just a helper, it's far from perfect, use at own risk! Better make some modifications first!
 #
 
 cd ~/github
