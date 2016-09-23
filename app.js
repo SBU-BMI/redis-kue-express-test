@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 // require kue
 const kue = require('kue');
 
-var routes = require('./routes/index');
+//var routes = require('./routes/index');
 //var users = require('./routes/users');
 
 // add route
@@ -30,12 +30,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Use kue's .app property to mount the UI on express middleware
 app.use('/queue', kue.app);
 
-app.use('/', routes);
+//app.use('/', routes);
 //app.use('/users', users);
 
 // use route
 app.use('/payments', payments);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -51,7 +50,10 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    // If we were using a views engine,
+    // we could use res.render()
+    //res.render('error', {
+    res.json({
       message: err.message,
       error: err
     });
@@ -62,11 +64,13 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+    // If we were using a views engine,
+    // we could use res.render()
+    //res.render('error', {
+    res.json({
     message: err.message,
     error: {}
   });
 });
-
 
 module.exports = app;
