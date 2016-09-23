@@ -4,12 +4,11 @@
 Start redis:<br>
 `redis-server`<br>
 
-~~Scratch this.~~<br>
-~~Set environment variable:~~<br>
-~~`export KUE_PORT=6379`~~<br>
-
-Start this app like this:<br>
+In another terminal window, start the app:<br>
 `node bin/www`<br>
+
+In another terminal window, run the test:<br>
+`npm test`<br>
 
 Then navigate to:<br>
 [http://localhost:3000/queue](http://localhost:3000/queue)
