@@ -1,8 +1,14 @@
 # redis-kue-express-test
 
 ## How to use
-Start this app like this:
-`node bin/www`
+Start redis:<br>
+`redis-server`<br>
+
+Set environment variable:<br>
+`export KUE_PORT=6379`<br>
+
+Start this app like this:<br>
+`node bin/www`<br>
 
 Then navigate to:<br>
 [http://localhost:3000/queue](http://localhost:3000/queue)
